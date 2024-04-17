@@ -9,21 +9,30 @@ interface GoalItemProps {
 
 const GoalItem: React.FC<GoalItemProps> = ({ item, deleteGoalHandler }) => {
   return (
-    <Pressable onPress={deleteGoalHandler.bind(this, item.id)}>
-      <View style={styles.goalItem}>
+    <View style={styles.goalItem}>
+      <Pressable
+        onPress={deleteGoalHandler.bind(this, item.id)}
+        style={({ pressed }) => (pressed ? styles.pressedItem : styles.item)}
+      >
         <Text>{item.title}</Text>
-      </View>
-    </Pressable>
+      </Pressable>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   goalItem: {
-    padding: 10,
     marginVertical: 10,
     backgroundColor: "#ccc",
     borderColor: "black",
     borderWidth: 1,
+  },
+  pressedItem: {
+    padding: 10,
+    backgroundColor: "#f0f",
+  },
+  item: {
+    padding: 10,
   },
 });
 

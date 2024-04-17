@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Button, StyleSheet, View } from "react-native";
 import GoalInput from "./components/GoalInput";
 import GoalList from "./components/GoalList";
 import GoalItem from "./components/GoalItem";
@@ -11,6 +11,7 @@ export interface Goal {
 
 export default function App() {
   const [goals, setGoals] = useState<Goal[]>([]);
+  const [isAddMode, setIsAddMode] = useState(false);
 
   const addGoalHandler = (text: string) => {
     setGoals((goals) => [
@@ -25,7 +26,12 @@ export default function App() {
 
   return (
     <View style={styles.appContainer}>
-      <GoalInput addGoalHandler={addGoalHandler} />
+      <Button title="Add New Goal" onPress={() => setIsAddMode(true)} />
+      <GoalInput
+        addGoalHandler={addGoalHandler}
+        visible={isAddMode}
+        setVisibility={setIsAddMode}
+      />
       <GoalList goals={goals}>
         {({ item }) => (
           <GoalItem item={item} deleteGoalHandler={deleteGoalHandler} />
@@ -41,5 +47,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     height: "100%",
     backgroundColor: "#f0f",
+    gap: 10,
+    paddingBottom: 20,
   },
 });
